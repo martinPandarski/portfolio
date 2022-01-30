@@ -1,5 +1,6 @@
 .contact-me-container {
   height: 100vh;
+  width: 100vw;
   position: relative;
   align-items: center;
   display: flex;
@@ -35,10 +36,13 @@
     margin-left: auto;
     margin-right: auto;
     left: 0;
-    right: 0;
     text-align: center;
     z-index: 0;
     right: 20%;
+  }
+  svg {
+    width: auto;
+    height: auto;
   }
 
   .blobs:hover {
@@ -51,6 +55,15 @@
     }
     100% {
       transform: translate(100px, 100px) rotate(359deg);
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .contact-me-container {
+    .blobs {
+      left: auto;
+      right: -60%;
     }
   }
 }

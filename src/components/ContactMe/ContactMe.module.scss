@@ -1,0 +1,56 @@
+.contact-me-container {
+  height: 100vh;
+  position: relative;
+  align-items: center;
+  display: flex;
+  .contact-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .top {
+    animation: rotate 15s infinite linear;
+  }
+
+  .middle {
+    animation: rotate 18s infinite reverse linear;
+  }
+
+  .bottom {
+    animation: rotate 20s infinite linear;
+  }
+
+  .blobs {
+    transition: transform 5s;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 0;
+    right: 20%;
+  }
+
+  .blobs:hover {
+    transform: translate(100px, 100px) scale(0);
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: translate(100px, 100px) rotate(0deg);
+    }
+    100% {
+      transform: translate(100px, 100px) rotate(359deg);
+    }
+  }
+}

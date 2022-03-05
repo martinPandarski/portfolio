@@ -5,14 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
 import { useRef } from "react";
-import ExperienceList, { List } from "../ExperienceList/ExperienceList";
-import { Item } from "../Item/Item";
-import { useParams } from "react-router-dom";
+import ExperienceList from "../ExperienceList/ExperienceList";
 import ContactMe from "../ContactMe/ContactMe";
 
 export default function Index() {
-    const { id } = useParams();
-    const imageIsLoaded = true;
     const experienceRef = useRef(null);
     const executeScroll = () =>
         experienceRef.current.scrollIntoView({ behavior: "smooth" });
@@ -79,9 +75,6 @@ export default function Index() {
                     </div>
                     <div className={styles["experience-container"]} ref={experienceRef}>
                         <ExperienceList />
-                        {/* <AnimatePresence>
-                            {id && imageIsLoaded && <Item id={id} key={"item"} />}
-                        </AnimatePresence> */}
                         <div className={styles["custom-shape-divider-bottom"]}>
                             <svg
                                 data-name="Layer 1"

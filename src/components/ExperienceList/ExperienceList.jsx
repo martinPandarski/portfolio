@@ -1,9 +1,7 @@
-import { Tooltip, Typography } from '@mui/material'
-import { motion, useMotionValue, useTransform, useMotionTemplate, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom';
+import { Tooltip } from '@mui/material'
+import { motion } from 'framer-motion'
 import { items } from '../../utils/jobs'
-import '../../styles/styles.css'
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './styles.scss'
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -79,6 +77,7 @@ export default function ExperienceList() {
                 setSelectedIndex(i)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedSquare])
     return (
         <div className={`cp-transition cp-transition__container cp-transition__container--${selectedSquare}`}>

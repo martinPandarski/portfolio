@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
 import { useRef } from "react";
-import { List } from "../ExperienceList/ExperienceList";
+import ExperienceList, { List } from "../ExperienceList/ExperienceList";
 import { Item } from "../Item/Item";
 import { useParams } from "react-router-dom";
 import ContactMe from "../ContactMe/ContactMe";
@@ -31,7 +31,7 @@ export default function Index() {
                 </AppBar>
             </Slide>
             <Toolbar />
-            <AnimatePresence>
+            <AnimatePresence exitBeforeEnter initial={false}>
                 <div className={styles["app-container"]}>
                     <div className={styles.hero}>
                         <motion.div
@@ -78,10 +78,10 @@ export default function Index() {
                         </motion.div>
                     </div>
                     <div className={styles["experience-container"]} ref={experienceRef}>
-                        <List selectedId={id} />
-                        <AnimatePresence>
+                        <ExperienceList />
+                        {/* <AnimatePresence>
                             {id && imageIsLoaded && <Item id={id} key={"item"} />}
-                        </AnimatePresence>
+                        </AnimatePresence> */}
                         <div className={styles["custom-shape-divider-bottom"]}>
                             <svg
                                 data-name="Layer 1"

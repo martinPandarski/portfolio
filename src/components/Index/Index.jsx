@@ -1,14 +1,48 @@
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { AppBar, IconButton, Slide, Toolbar, Typography } from "@mui/material";
+import { AppBar, IconButton, Slide, Toolbar, Box, Button, Zoom, Fab } from "@mui/material";
 import styles from "./Index.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ExperienceList from "../ExperienceList/ExperienceList";
 import ContactMe from "../ContactMe/ContactMe";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-export default function Index() {
+function ScrollToTop(props) {
+    const { children } = props;
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 100,
+    })
+
+    const handleClick = (e) => {
+        const anchor = (e.target.ownerDocument || document).querySelector("#back-to-top-anchor");
+        if (anchor) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            })
+        }
+    }
+
+    return (
+        <Zoom in={trigger}>
+            <Box onClick={handleClick}
+                role="presentation"
+                sx={{ position: "fixed", bottom: 16, right: 16 }}>
+                {children}
+            </Box>
+        </Zoom>
+    )
+}
+
+export default function Index(props) {
+    const [isHovered, setIsHovered] = useState(false);
+    const contactRef = useRef(null);
+    const executeContactScroll = () =>
+        contactRef.current.scrollIntoView({ behavior: "smooth" });
+
     const experienceRef = useRef(null);
     const executeScroll = () =>
         experienceRef.current.scrollIntoView({ behavior: "smooth" });
@@ -21,8 +55,15 @@ export default function Index() {
         <>
             <Slide appear={false} direction="down" in={!appBarTrigger}>
                 <AppBar sx={{ backgroundColor: '#202731' }}>
-                    <Toolbar>
-                        <p>Asd</p>
+                    <Toolbar id="back-to-top-anchor">
+                        <Box style={{ display: "flex", alignItems: "center" }}>
+                            <Button onClick={executeScroll} sx={{ my: 2, color: 'white', display: 'block' }}>
+                                Check out my experience
+                            </Button>
+                            <Button onClick={executeContactScroll} sx={{ my: 2, color: 'white', display: 'block' }}>
+                                Contact me
+                            </Button>
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </Slide>
@@ -37,7 +78,27 @@ export default function Index() {
                             animate={inView ? { opacity: 1 } : ""}
                             transition={{ duration: 1.75, bounce: 0.5 }}
                         >
-                            <Typography variant="h3">Martin Pandarski</Typography>
+                            <div className={styles['link-container']}>
+                                <div
+                                    className={styles['name-container']}
+                                    onMouseOver={() => setIsHovered(true)}
+                                    onMouseOut={() => setIsHovered(false)}  >
+                                    {'Martin Pandarski'.split('').map((letter, i) => (
+                                        <div className={styles['letter-container']} key={i}>
+                                            <div>{letter}</div>
+                                            <motion.div
+                                                initial={{ left: "-100%" }}
+                                                animate={{ left: isHovered ? '0%' : '-100%' }}
+                                                transition={{
+                                                    duration: isHovered ? .7 : .5,
+                                                    ease: [.7, 0, .3, 1]
+                                                }}>
+                                                {letter.toUpperCase()}
+                                            </motion.div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             <motion.span
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -89,9 +150,17 @@ export default function Index() {
                             </svg>
                         </div>
                     </div>
-                    <ContactMe />
+                    <div className={styles['contact-container']} ref={contactRef}>
+                        <h2>Contact me</h2>
+                        <ContactMe />
+                    </div>
                 </div>
             </AnimatePresence>
+            <ScrollToTop {...props}>
+                <Fab color="secondary" size="small" aria-label="scroll back to top">
+                    <KeyboardArrowUpIcon />
+                </Fab>
+            </ScrollToTop>
         </>
     );
 }

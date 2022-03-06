@@ -82,6 +82,7 @@ export default function Index(props) {
                 </AppBar>
             </Slide>
             <Toolbar />
+
             <AnimatePresence exitBeforeEnter initial={false}>
                 <div className={styles["app-container"]}>
                     <div className={styles.hero}>

@@ -169,3 +169,11 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .cp-transition {
+    &__squares-wrapper {
+      flex-direction: column;
+    }
+  }
+}

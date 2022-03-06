@@ -4,10 +4,12 @@ import styles from "./Index.module.scss";
 import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import ExperienceList from "../ExperienceList/ExperienceList";
 import ContactMe from "../ContactMe/ContactMe";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useMediaQuery } from '@mui/material'
+import NotifyModal from "../NotifyModal/NotifyModal";
 
 function ScrollToTop(props) {
     const { children } = props;
@@ -38,6 +40,18 @@ function ScrollToTop(props) {
 }
 
 export default function Index(props) {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const close = () => setModalOpen(false);
+    const open = () => setModalOpen(true);
+    const isMobile = useMediaQuery('(max-width:900px)');
+    useEffect(() => {
+        if (isMobile) {
+            open();
+        } else {
+            close();
+        }
+    }, [isMobile]);
     const [isHovered, setIsHovered] = useState(false);
     const contactRef = useRef(null);
     const executeContactScroll = () =>
@@ -161,6 +175,9 @@ export default function Index(props) {
                     <KeyboardArrowUpIcon />
                 </Fab>
             </ScrollToTop>
+            <AnimatePresence initial={false} exitBeforeEnter={true} onExitComplete={() => null}>
+                {modalOpen && <NotifyModal handleClose={close} />}
+            </AnimatePresence>
         </>
     );
 }

@@ -10,6 +10,7 @@ import ContactMe from "../ContactMe/ContactMe";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useMediaQuery } from '@mui/material'
 import NotifyModal from "../NotifyModal/NotifyModal";
+import Spline from '@splinetool/react-spline';
 
 function ScrollToTop(props) {
     const { children } = props;
@@ -82,9 +83,9 @@ export default function Index(props) {
                 </AppBar>
             </Slide>
             <Toolbar />
-
             <AnimatePresence exitBeforeEnter initial={false}>
                 <div className={styles["app-container"]}>
+                    <iframe className={styles.canvas} title="canvas" src='https://my.spline.design/interactivespherescopy-48e4125c46817395984bd5efa85e481b/' frameborder='0' width='100%' height='100%'></iframe>
                     <div className={styles.hero}>
                         <motion.div
                             className={styles.hero__text}
@@ -170,6 +171,7 @@ export default function Index(props) {
                         <ContactMe />
                     </div>
                 </div>
+
             </AnimatePresence>
             <ScrollToTop {...props}>
                 <Fab color="secondary" size="small" aria-label="scroll back to top">
